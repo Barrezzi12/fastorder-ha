@@ -1,0 +1,85 @@
+package com.fastorder.order_service.service;
+
+import com.fastorder.order_service.dto.OrderRequest;
+import com.fastorder.order_service.model.*;
+import com.fastorder.order_service.repository.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+    private final OutboxRepository outboxRepository;
+    private final ObjectMapper objectMapper;
+
+    @Transactional
+    public void confirmOrder(UUID externalId) {
+        orderRepository.findByExternalId(externalId).ifPresent(order -> {
+            if (order.getStatus() == OrderStatus.PENDING) {
+                order.setStatus(OrderStatus.CONFIRMED);
+                orderRepository.save(order);
+                log.info("Orden CONFIRMADA: {}", externalId);
+            }
+        });
+    }
+
+    @Transactional
+    public void cancelOrder(UUID externalId) {
+        orderRepository.findByExternalId(externalId).ifPresent(order -> {
+            if (order.getStatus() == OrderStatus.PENDING) {
+                order.setStatus(OrderStatus.CANCELLED);
+                orderRepository.save(order);
+                log.warn("Orden CANCELADA por falta de stock: {}", externalId);
+            }
+        });
+    }
+
+    @Transactional
+    public Order createOrder(OrderRequest request) {
+        log.info("Procesando creación de orden para clientOrderId: {}", request.clientOrderId());
+
+        // 1. IDPOTENCIA REAL (DB Constraint + Check)
+        return orderRepository.findByClientOrderId(request.clientOrderId())
+                .orElseGet(() -> persistOrderAndEvent(request));
+    }
+
+    private Order persistOrderAndEvent(OrderRequest request) {
+        // 2. Crear Entidad con Money Safe (BigDecimal)
+        Order order = Order.builder()
+                .clientOrderId(request.clientOrderId())
+                .status(OrderStatus.PENDING)
+                .total(request.total())
+                .build();
+
+        Order savedOrder = orderRepository.save(order);
+
+        // 3. TRANSACTIONAL OUTBOX (Evita Dual Write Problem)
+        // Guardamos el evento en la misma transacción que la orden
+        try {
+            String payload = objectMapper.writeValueAsString(savedOrder);
+            OutboxEvent event = OutboxEvent.builder()
+                    .aggregateType("ORDER")
+                    .aggregateId(savedOrder.getExternalId().toString())
+                    .eventType("ORDER_CREATED")
+                    .payload(payload)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            
+            outboxRepository.save(event);
+        } catch (Exception e) {
+            log.error("Error serializando evento para Outbox", e);
+            throw new RuntimeException("Error crítico en la persistencia del sistema");
+        }
+
+        return savedOrder;
+    }
+}

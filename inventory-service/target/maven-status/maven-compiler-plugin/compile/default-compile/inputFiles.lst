@@ -1,0 +1,11 @@
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\repository\OutboxRepository.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\service\InventoryService.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\model\ProcessedMessage.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\messaging\OutboxRelay.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\repository\InventoryRepository.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\config\RabbitConfig.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\model\Inventory.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\InventoryServiceApplication.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\model\OutboxEvent.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\messaging\OrderConsumer.java
+C:\Users\tonys\OneDrive\Escritorio\fastorder-ha - copia\inventory-service\src\main\java\com\fastorder\inventory_service\repository\ProcessedMessageRepository.java

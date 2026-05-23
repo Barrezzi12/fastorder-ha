@@ -1,0 +1,5 @@
+com\fastorder\menu_service\controller\MenuController.class
+com\fastorder\menu_service\repository\ProductRepository.class
+com\fastorder\menu_service\MenuServiceApplication.class
+com\fastorder\menu_service\model\Product$ProductBuilder.class
+com\fastorder\menu_service\model\Product.class

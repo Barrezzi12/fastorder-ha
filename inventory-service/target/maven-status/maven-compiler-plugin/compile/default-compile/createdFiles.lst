@@ -1,0 +1,14 @@
+com\fastorder\inventory_service\messaging\OutboxRelay.class
+com\fastorder\inventory_service\model\Inventory$InventoryBuilder.class
+com\fastorder\inventory_service\service\InventoryService.class
+com\fastorder\inventory_service\model\ProcessedMessage.class
+com\fastorder\inventory_service\messaging\OrderConsumer.class
+com\fastorder\inventory_service\InventoryServiceApplication.class
+com\fastorder\inventory_service\model\ProcessedMessage$ProcessedMessageBuilder.class
+com\fastorder\inventory_service\repository\InventoryRepository.class
+com\fastorder\inventory_service\repository\ProcessedMessageRepository.class
+com\fastorder\inventory_service\model\OutboxEvent.class
+com\fastorder\inventory_service\repository\OutboxRepository.class
+com\fastorder\inventory_service\config\RabbitConfig.class
+com\fastorder\inventory_service\model\Inventory.class
+com\fastorder\inventory_service\model\OutboxEvent$OutboxEventBuilder.class

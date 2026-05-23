@@ -1,0 +1,22 @@
+package com.fastorder.order_service.dto;
+
+import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
+import java.util.UUID;
+
+public record OrderRequest(
+    @NotNull(message = "clientOrderId es requerido")
+    UUID clientOrderId, // ID de cliente para idempotencia desde el origen
+
+    @NotNull(message = "El total es requerido")
+    @DecimalMin(value = "0.01", message = "El total debe ser mayor a 0")
+    BigDecimal total,
+
+    @NotEmpty(message = "Debe incluir al menos un producto")
+    java.util.List<OrderItemRequest> items
+) {}
+
+record OrderItemRequest(
+    @NotBlank String productId,
+    @Min(1) int quantity
+) {}
