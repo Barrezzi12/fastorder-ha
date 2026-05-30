@@ -1,5 +1,5 @@
 # Script de Chaos Engineering para FastOrder HA
-# Ejecutar mientras k6 está corriendo: k6 run tests-load/stress-test.js
+# Ejecutar mientras k6 esta corriendo: k6 run tests/stress-test.js
 
 function kill_pod() {
     $pod = (kubectl get pods -l app=$args[0] -o jsonpath='{.items[0].metadata.name}')
